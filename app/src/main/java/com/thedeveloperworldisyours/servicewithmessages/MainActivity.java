@@ -17,6 +17,10 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final String SAVE_INSTANCE_STATUS = "textStatus";
+    static final String SAVE_INSTANCE_INT_VALUE = "textIntValue";
+    static final String SAVE_INSTANCE_STRING_VALUE = "textStrValue";
+
     TextView mTextStatus, mTextIntValue, mTextStrValue;
     Messenger mService = null;
     boolean mIsBound;
@@ -75,24 +79,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("textStatus", mTextStatus.getText().toString());
-        outState.putString("textIntValue", mTextIntValue.getText().toString());
-        outState.putString("textStrValue", mTextStrValue.getText().toString());
+        outState.putString( SAVE_INSTANCE_STATUS, mTextStatus.getText().toString());
+        outState.putString( SAVE_INSTANCE_INT_VALUE, mTextIntValue.getText().toString());
+        outState.putString( SAVE_INSTANCE_STRING_VALUE, mTextStrValue.getText().toString());
     }
 
     private void restoreMe(Bundle state) {
         if (state != null) {
-            mTextStatus.setText(state.getString("mTextStatus"));
-            mTextIntValue.setText(state.getString("mTextIntValue"));
-            mTextStrValue.setText(state.getString("mTextStrValue"));
+            mTextStatus.setText(state.getString(SAVE_INSTANCE_STATUS));
+            mTextIntValue.setText(state.getString(SAVE_INSTANCE_INT_VALUE));
+            mTextStrValue.setText(state.getString(SAVE_INSTANCE_STRING_VALUE));
         }
     }
 
-    public void onClickBtnStart(View view){
+    public void onClickBtnStart(View view) {
         startService(new Intent(MainActivity.this, MyService.class));
     }
 
-    public void onClickBtnStop(View view){
+    public void onClickBtnStop(View view) {
         doUnbindService();
         stopService(new Intent(MainActivity.this, MyService.class));
     }
